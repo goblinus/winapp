@@ -1,0 +1,16 @@
+services:
+  nginx:
+    # image: nginx:latest
+    build:
+      context: ./docker/nginx
+    restart: always
+    ports:
+      - 2000:80
+    volumes:
+      - ./docker/nginx/static-site:/usr/share/nginx/html
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - 6379:6379
