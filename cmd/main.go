@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	libRedis "github.com/redis/go-redis/v9"
 
 	"github.com/goblinus/winapp/internal/adapters/inmemory"
@@ -70,9 +72,16 @@ import (
 // 	return r
 // }
 
+type RedisConfig struct {
+	Addr string
+}
+
 func main() {
+	var redisConfig RedisConfig
+	redisConfig.Addr = os.Getenv("REDIS_HOST")
+
 	apiRedis := libRedis.NewClient(&libRedis.Options{
-		Addr:     "localhost:6379",
+		Addr:     redisConfig.Addr,
 		Password: "", //no password
 		DB:       0,  // use default DB
 	})

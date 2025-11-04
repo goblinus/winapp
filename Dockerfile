@@ -1,7 +1,9 @@
 FROM golang:alpine
 WORKDIR /app
-COPY * ./
-RUN go mod tidy
-RUN go build -o /winapp
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+COPY . .
+RUN go build -o /task_manager ./cmd/main.go
 EXPOSE 8085
-CMD [ "/winapp" ]
+CMD [ "/task_manager" ]
